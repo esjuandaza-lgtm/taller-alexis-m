@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153d3c">
+  <title>{% block titulo %}Agenda{% endblock %} · TurnoLab</title>
+  <link rel="stylesheet" href="{{ url_for('estaticos', path='agenda.css') }}">
+</head>
+<body>
+  <a href="#contenido" class="salto">Ir al contenido</a>
+  <header class="cabecera">
+    <div class="contenedor cabecera-interior">
+      <a class="marca" href="/" aria-label="TurnoLab, inicio">Turno<span>Lab</span></a>
+      <nav aria-label="Principal">
+        <a href="/" {% if request.url.path != '/kits' %}aria-current="page"{% endif %}>Agenda</a>
+        <a href="/kits" {% if request.url.path == '/kits' %}aria-current="page"{% endif %}>Kits</a>
+      </nav>
+      <span class="sede">{% if es_demo %}Modo de práctica{% else %}Laboratorio de soporte{% endif %}</span>
+    </div>
+  </header>
+  <main id="contenido" class="contenedor">{% block contenido %}{% endblock %}</main>
+  <footer class="contenedor pie">Proyecto académico LPPC · INFOTEP, San Juan del Cesar</footer>
+</body>
+</html>

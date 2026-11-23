@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar reserva{% endblock %}
+{% block contenido %}
+<div class="pagina-form">
+  <a class="volver" href="/reservas/{{ reserva.id }}/editar">‹ Volver a la reserva</a>
+  <div class="encabezado"><div><h1>Eliminar reserva</h1><p class="subtitulo">{{ reserva.fecha|fecha_larga }}</p></div></div>
+  <div class="panel confirmar"><h2>{{ reserva.actividad }}</h2>
+    <p>{{ kit.nombre }} · {{ reserva.aula }} · {{ reserva.inicio|reloj }}–{{ reserva.fin|reloj }}</p>
+    <p>Al confirmar, se libera el equipo para otra clase.</p>
+    <form class="acciones" method="post" action="/reservas/{{ reserva.id }}/eliminar">
+      <input type="hidden" name="token" value="{{ token }}"><input type="hidden" name="version" value="{{ reserva.version }}">
+      <button class="boton peligro">Confirmar eliminación</button><a class="boton secundario" href="/reservas/{{ reserva.id }}/editar">Conservar reserva</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

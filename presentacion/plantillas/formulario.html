@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ 'Editar reserva' if reserva_id else 'Nueva reserva' }}{% endblock %}
+{% block contenido %}
+<div class="pagina-form">
+  <a href="/?fecha={{ valores.fecha|urlencode }}" class="volver">‹ Volver a la agenda</a>
+  <div class="encabezado"><div><h1>{{ 'Editar reserva' if reserva_id else 'Nueva reserva' }}</h1>
+  <p class="subtitulo">La clase y la revisión del equipo deben caber entre las 07:00 y las 18:00.</p></div></div>
+  <form class="panel formulario" method="post" action="{{ '/reservas/' ~ reserva_id ~ '/editar' if reserva_id else '/reservas' }}">
+    <input type="hidden" name="token" value="{{ token }}">
+    <input type="hidden" name="version" value="{{ valores.version }}">
+    {% if error %}<div class="mensaje alerta" role="alert"><strong>{{ error }}</strong>
+      {% if alternativa %}<p>El primer turno que conserva la duración solicitada es de {{ alternativa[0]|reloj }} a {{ alternativa[1]|reloj }}.</p>
+        <button class="boton secundario" name="usar_franja" value="{{ alternativa[0]|reloj }}/{{ alternativa[1]|reloj }}">Guardar de {{ alternativa[0]|reloj }} a {{ alternativa[1]|reloj }}</button>
+      {% elif cruce %}<p>Ya no queda una franja suficiente desde esa hora. Elige otro kit, otra hora u otra fecha.</p>
+      {% elif desactualizada %}<p><a href="/reservas/{{ reserva_id }}/editar">Abrir la versión actual</a></p>{% endif %}
+    </div>{% endif %}
+    <fieldset><legend>Equipo y horario</legend><div class="campos">
+      <label>Equipo <select name="kit" required>
+        {% for k in kits %}<option value="{{ k.id }}" {% if valores.kit == k.id|string %}selected{% endif %}>{{ k.nombre }} · {{ k.revision_min }} min de revisión</option>{% endfor %}
+      </select></label>
+      <label>Fecha <input type="date" name="fecha" value="{{ valores.fecha }}" required></label>
+      <label>Inicio de clase <input type="time" name="inicio" value="{{ valores.inicio }}" min="07:00" max="18:00" required></label>
+      <label>Fin de clase <input type="time" name="fin" value="{{ valores.fin }}" min="07:00" max="18:00" required></label>
+    </div></fieldset>
+    <fieldset><legend>Datos de la clase</legend><div class="campos">
+      <label class="ancho">Actividad <input name="actividad" value="{{ valores.actividad }}" minlength="2" maxlength="80" placeholder="Ej. Taller de multimedia" required></label>
+      <label>Responsable <input name="responsable" value="{{ valores.responsable }}" minlength="2" maxlength="60" required></label>
+      <label>Aula o espacio <input name="aula" value="{{ valores.aula }}" minlength="2" maxlength="40" required></label>
+    </div></fieldset>
+    <div class="acciones"><button class="boton primario" type="submit">{{ 'Guardar cambios' if reserva_id else 'Crear reserva' }}</button>
+      <a class="boton secundario" href="/?fecha={{ valores.fecha|urlencode }}">Cancelar</a>
+      {% if reserva_id %}<a class="texto-peligro" href="/reservas/{{ reserva_id }}/eliminar">Eliminar reserva</a>{% endif %}
+    </div>
+  </form>
+</div>
+{% endblock %}
