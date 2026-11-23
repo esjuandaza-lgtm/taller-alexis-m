@@ -131,3 +131,7 @@ Con el entorno virtual creado y las dependencias instaladas, ejecuta desde la ca
 ```
 
 Las pruebas verifican los límites de horario, los cruces entre reservas y la sugerencia de la primera franja disponible.
+## Créditos
+
+- Proyecto final de Laboratorio de Programación por Capas y Componentes (LPPC-1525), INFOTEP, San Juan del Cesar.
+- Autor: tu nombre completo.
