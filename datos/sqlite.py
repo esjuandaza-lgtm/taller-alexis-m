@@ -1,3 +1,4 @@
+from __future__ import annotations
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager, closing
 from dataclasses import replace
