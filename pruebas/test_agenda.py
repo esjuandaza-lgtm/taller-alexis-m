@@ -22,6 +22,10 @@ class PruebasAgenda(unittest.TestCase):
     def guardar(self, **cambios):
         return self.agenda.guardar(**(self.datos | cambios))
 
+    def test_reserva_permitida_en_la_hora_de_apertura(self):
+        reserva = self.guardar(inicio="07:00", fin="08:00")
+        self.assertEqual(reserva.inicio, 7 * 60)
+        
     def test_revision_limita_el_siguiente_prestamo(self):
         primera = self.guardar()
         self.assertEqual(primera.libre, 10 * 60 + 20)
