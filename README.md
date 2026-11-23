@@ -111,3 +111,13 @@ Como el docente puede elegir a dos integrantes, conviene que todos puedan hacer 
 - [Jinja y la herencia de plantillas](https://jinja.palletsprojects.com/en/stable/intro/)
 - [SQLite desde Python y parámetros en las consultas](https://docs.python.org/es/3/library/sqlite3.html)
 - [Transacciones de SQLite](https://www.sqlite.org/lang_transaction.html)
+
+## Estructura del proyecto
+
+- `dominio/`: reglas del negocio (reservas y cálculo de la primera franja disponible).
+- `datos/`: guarda el catálogo y las reservas.
+- `presentacion/`: la agenda web conectada con el servicio.
+- `pruebas/`: pruebas automáticas (límites, cruces de horario y sugerencias).
+- `docs/`: instalación y material de la sustentación.
+- `entrega/`: ZIP con el código y una copia del historial Git.
+- `app.py`: punto de entrada de la aplicación.
