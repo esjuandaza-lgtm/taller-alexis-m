@@ -121,3 +121,13 @@ Como el docente puede elegir a dos integrantes, conviene que todos puedan hacer 
 - `docs/`: instalación y material de la sustentación.
 - `entrega/`: ZIP con el código y una copia del historial Git.
 - `app.py`: punto de entrada de la aplicación.
+
+## Cómo ejecutar las pruebas
+
+Con el entorno virtual creado y las dependencias instaladas, ejecuta desde la carpeta del proyecto:
+
+```sh
+.venv/bin/python -m unittest discover -s pruebas -v
+```
+
+Las pruebas verifican los límites de horario, los cruces entre reservas y la sugerencia de la primera franja disponible.
