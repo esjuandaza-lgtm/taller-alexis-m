@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block titulo %}Agenda de equipos{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Agenda de equipos</h1><p class="subtitulo">{{ dia.fecha|fecha_larga }}</p></div>
+  <a class="boton primario" href="/reservas/nueva?fecha={{ dia.fecha.isoformat() }}&amp;kit={{ dia.kit_seleccionado or '' }}"><span aria-hidden="true">+</span> Nueva reserva</a>
+</div>
+{% if aviso %}<p class="mensaje correcto" role="status">{{ aviso }}</p>{% endif %}
+<form method="get" action="/" class="filtros">
+  <label>Fecha <input type="date" name="fecha" value="{{ dia.fecha.isoformat() }}" required></label>
+  <label>Equipo <select name="kit"><option value="">Todos los kits</option>
+    {% for kit in dia.kits %}<option value="{{ kit.id }}" {% if kit.id == dia.kit_seleccionado %}selected{% endif %}>{{ kit.nombre }}</option>{% endfor %}
+  </select></label>
+  <button class="boton secundario">Ver agenda</button>
+  <div class="cambio-dia">
+    {% if anterior %}<a aria-label="Día anterior" title="Día anterior" href="/?fecha={{ anterior.isoformat() }}&amp;kit={{ dia.kit_seleccionado or '' }}">‹</a>{% endif %}
+    {% if siguiente %}<a aria-label="Día siguiente" title="Día siguiente" href="/?fecha={{ siguiente.isoformat() }}&amp;kit={{ dia.kit_seleccionado or '' }}">›</a>{% endif %}
+  </div>
+</form>
+<div class="resumen" aria-label="Resumen del día según el filtro">
+  <div><span>Reservas</span><strong>{{ dia.reservas|length }}</strong></div>
+  <div><span>Tiempo de clase</span><strong>{{ dia.minutos_clase|duracion }}</strong></div>
+  <div><span>Revisión técnica</span><strong>{{ dia.minutos_revision|duracion }}</strong></div>
+</div>
+<section class="panel" aria-labelledby="horarios">
+  <div class="titulo-seccion"><h2 id="horarios">Ocupación del día</h2><div class="leyenda"><span><i class="color-clase"></i>Clase</span><span><i class="color-revision"></i>Revisión</span></div></div>
+  <div class="cronograma">
+    <div class="fila-crono eje" aria-hidden="true"><span></span><div class="marcas">{% for hora in [7,9,11,13,15,17,18] %}<span style="left:{{ (hora*60-apertura)*100/(cierre-apertura) }}%">{{ '%02d'|format(hora) }}</span>{% endfor %}</div></div>
+    {% for kit in visibles %}<div class="fila-crono">
+      <span class="nombre-kit">{{ kit.nombre }}</span>
+      <div class="pista" aria-label="Horarios de {{ kit.nombre }}">
+        {% for r in por_kit[kit.id] %}<a class="bloque" href="/reservas/{{ r.id }}/editar"
+          style="left:{{ (r.inicio-apertura)*100/(cierre-apertura) }}%;width:{{ (r.libre-r.inicio)*100/(cierre-apertura) }}%"
+          aria-label="{{ r.actividad }}, clase de {{ r.inicio|reloj }} a {{ r.fin|reloj }}, kit disponible a las {{ r.libre|reloj }}"
+          title="{{ r.actividad }} · {{ r.inicio|reloj }} a {{ r.fin|reloj }} · Libre a las {{ r.libre|reloj }}">
+          <span class="color-clase" style="width:{{ (r.fin-r.inicio)*100/(r.libre-r.inicio) }}%"></span><span class="color-revision"></span>
+        </a>{% endfor %}
+      </div>
+    </div>{% endfor %}
+  </div>
+</section>
+<section class="panel" aria-labelledby="detalle"><div class="titulo-seccion"><h2 id="detalle">Detalle de reservas</h2></div>
+{% if dia.reservas %}
+  <div class="tabla-contenedor"><table><thead><tr><th>Clase</th><th>Actividad y responsable</th><th>Equipo y aula</th><th>Kit libre</th><th><span class="solo-lectores">Acción</span></th></tr></thead>
+  <tbody>{% for r in dia.reservas %}<tr>
+    <td class="hora">{{ r.inicio|reloj }}–{{ r.fin|reloj }}</td>
+    <td><strong>{{ r.actividad }}</strong><small>{{ r.responsable }}</small></td>
+    <td>{{ equipos[r.kit_id].nombre }}<small>{{ r.aula }}</small></td>
+    <td class="libre">{{ r.libre|reloj }}</td>
+    <td><a href="/reservas/{{ r.id }}/editar" aria-label="Editar {{ r.actividad }}">Editar</a></td>
+  </tr>{% endfor %}</tbody></table></div>
+{% else %}
+  <div class="vacio"><strong>No hay reservas para esta selección.</strong>
+  <p>Puedes registrar la primera clase o consultar otra fecha.</p></div>
+{% endif %}</section>
+{% endblock %}

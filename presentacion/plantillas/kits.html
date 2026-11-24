@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block titulo %}Catálogo de kits{% endblock %}
+{% block contenido %}
+<div class="encabezado"><div><h1>Catálogo de kits</h1><p class="subtitulo">El tiempo de revisión se reserva al terminar cada clase.</p></div></div>
+<section class="catalogo" aria-label="Kits para préstamo">
+  {% for kit in kits %}
+  <article class="kit-card"><div class="ficha">
+    <h2>{{ kit.nombre }}</h2><p>{{ kit.contenido }}</p>
+    <div class="margen-kit"><strong>{{ kit.revision_min }}</strong> min de revisión</div>
+  </div>
+  <footer><a href="/?fecha={{ fecha }}&amp;kit={{ kit.id }}">Ver agenda</a>
+    <a href="/reservas/nueva?fecha={{ fecha }}&amp;kit={{ kit.id }}">Reservar kit</a></footer></article>
+  {% endfor %}
+</section>
+{% endblock %}

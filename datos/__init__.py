@@ -1,0 +1,1 @@
+"""Adaptador relacional de TurnoLab."""
