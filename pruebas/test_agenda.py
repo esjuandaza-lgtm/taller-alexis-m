@@ -6,7 +6,7 @@ from threading import Barrier
 
 from datos.sqlite import BaseSQLite
 from dominio.agenda import CruceHorario, EdicionAnterior, EntradaInvalida, NoEncontrado, ServicioAgenda
-
+from dominio.agenda import hora_texto,minutos
 
 class PruebasAgenda(unittest.TestCase):
     def setUp(self):
@@ -21,6 +21,10 @@ class PruebasAgenda(unittest.TestCase):
 
     def guardar(self, **cambios):
         return self.agenda.guardar(**(self.datos | cambios))
+
+    def test_hora_texto_es_el_inverso_de_minutos(self):
+        self.assertEqual(hora_texto(7 * 60), "07:00")
+        self.assertEqual(hora_texto(minutos("18:30")), "18:30")
 
     def test_reserva_permitida_en_la_hora_de_apertura(self):
         reserva = self.guardar(inicio="07:00", fin="08:00")
@@ -111,6 +115,7 @@ class PruebasAgenda(unittest.TestCase):
             self.assertCountEqual([t.result(timeout=8) for t in tareas], ["guardada", "cruce"])
         self.assertEqual(len(self.agenda.consultar("2026-11-24").reservas), 1)
 
+        
 
 if __name__ == "__main__":
     unittest.main()
