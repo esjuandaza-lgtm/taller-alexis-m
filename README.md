@@ -135,3 +135,9 @@ Las pruebas verifican los límites de horario, los cruces entre reservas y la su
 
 - Proyecto final de Laboratorio de Programación por Capas y Componentes (LPPC-1525), INFOTEP, San Juan del Cesar.
 - Autor: Jesus Armando Burgo Ortiz
+
+## Mejoras futuras
+
+- Notificaciones cuando un equipo queda libre.
+- Más tipos de equipos y aulas en el catálogo.
+- Historial de reservas por responsable.
