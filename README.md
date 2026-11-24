@@ -83,7 +83,7 @@ Desde la carpeta del proyecto, ejecuta las pruebas con Python.
 python -m unittest discover -s pruebas -v
 ```
 
-En Windows también puedes usar `py -3` y en macOS o Linux, `python3`. Las nueve pruebas crean bases temporales. Comprueban el límite exacto de entrega, las revisiones que se cruzan, las sugerencias con varias reservas, el cierre, el filtro por fecha y equipo, la validación, la persistencia, la edición y las solicitudes simultáneas.
+En Windows también se puede usar `py -3` y en macOS o Linux, `python3`. Las nueve pruebas crean bases temporales. Comprueban el límite exacto de entrega, las revisiones que se cruzan, las sugerencias con varias reservas, el cierre, el filtro por fecha y equipo, la validación, la persistencia, la edición y las solicitudes simultáneas.
 
 ## GitHub y participación del grupo
 
@@ -97,13 +97,8 @@ git log --oneline
 
 La base del proyecto se preparó con asistencia de Codex. Cada integrante debe hacer cambios propios, registrarlos con su cuenta y poder explicarlos. Para la inspección del docente, abran el historial de la rama del grupo, seleccionen un commit de cada integrante y muestren qué líneas cambió y cómo comprobaron su efecto.
 
-Si van a trabajar sin conexión, el ZIP incluye el archivo `historial-turnolab.bundle` junto a la carpeta del código. Desde el directorio donde se encuentra ese archivo, `git clone -b main historial-turnolab.bundle TurnoLab-local` recupera el historial de construcción de la base.
+Si se va a trabajar sin conexión, el ZIP incluye el archivo `historial-turnolab.bundle` junto a la carpeta del código. Desde el directorio donde se encuentra ese archivo, `git clone -b main historial-turnolab.bundle TurnoLab-local` recupera el historial de construcción de la base.
 
-## Preparación para la sustentación
-
-La guía fija revisiones de avance el 3, 10 y 17 de noviembre y la sustentación el 24 de noviembre. Para las evidencias de avance, el grupo debe usar las versiones y los aportes que realmente presentó en cada encuentro.
-
-Como el docente puede elegir a dos integrantes, conviene que todos puedan hacer ambas partes. Una persona puede explicar el préstamo de las 10:05, provocar el cruce y aceptar la propuesta. La otra puede seguir esa reserva por las tres capas, reiniciar el programa, comprobar el cambio de aula y mostrar el historial de GitHub.
 
 ## Referencias técnicas
 
